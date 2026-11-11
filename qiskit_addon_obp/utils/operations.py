@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import numpy as np
 from qiskit.quantum_info import SparsePauliOp
-from qiskit_ibm_runtime.utils.noise_learner_result import PauliLindbladError
+from qiskit_ibm_runtime.results.noise_learner import PauliLindbladError
 
 
 def _expand_op_and_qargs(
