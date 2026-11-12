@@ -17,7 +17,7 @@ from __future__ import annotations
 import numpy as np
 from qiskit.circuit import Instruction, QuantumCircuit, QuantumRegister
 from qiskit.quantum_info import PauliList, SparsePauliOp, SuperOp
-from qiskit_ibm_runtime.utils.noise_learner_result import PauliLindbladError
+from qiskit_ibm_runtime.results import PauliLindbladError
 
 
 class PauliLindbladErrorInstruction(Instruction):
@@ -57,6 +57,7 @@ class PauliLindbladErrorInstruction(Instruction):
             self.ple.generators.z,
             self.ple.generators.x,
             self.ple.rates,
+            strict=True,
         ):
             term_p = 0.5 - 0.5 * np.exp(-2 * term_r)
             chan_z = np.concatenate([chan_z, np.logical_xor(chan_z, term_z)], axis=0)
@@ -65,7 +66,7 @@ class PauliLindbladErrorInstruction(Instruction):
 
         error_op = SparsePauliOp(PauliList.from_symplectic(chan_z, chan_x), chan_p).simplify()
         chan = SuperOp(np.zeros(2 * [4**self.num_qubits]))
-        for pauli, coeff in zip(error_op.paulis, error_op.coeffs.real):
+        for pauli, coeff in zip(error_op.paulis, error_op.coeffs.real, strict=True):
             chan += coeff * SuperOp(pauli)
 
         q = QuantumRegister(self.num_qubits, "q")

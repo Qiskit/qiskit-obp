@@ -17,7 +17,7 @@ import unittest
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import PauliList
 from qiskit_addon_obp.utils.noise import PauliLindbladErrorInstruction
-from qiskit_ibm_runtime.utils.noise_learner_result import PauliLindbladError
+from qiskit_ibm_runtime.results import PauliLindbladError
 
 
 class TestPauliLindbladError(unittest.TestCase):

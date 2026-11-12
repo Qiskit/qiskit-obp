@@ -25,11 +25,11 @@ class TestSimplify(unittest.TestCase):
         """Test simplify method"""
         coeffs = [3 + 1j, -3 - 1j, 0, 4, -5, 2.2, -1.1j]
         labels = ["IXI", "IXI", "ZZZ", "III", "III", "XXX", "XXX"]
-        spp_op = SparsePauliOp.from_list(zip(labels, coeffs))
+        spp_op = SparsePauliOp.from_list(zip(labels, coeffs, strict=True))
         simplified_op, metadata = simplify(spp_op)
         target_coeffs = [-1, 2.2 - 1.1j]
         target_labels = ["III", "XXX"]
-        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs))
+        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs, strict=True))
         with self.subTest("Assert Operator"):
             self.assertEqual(simplified_op, target_op)
             np.testing.assert_array_equal(simplified_op.paulis.phase, np.zeros(simplified_op.size))
@@ -43,7 +43,7 @@ class TestSimplify(unittest.TestCase):
         """Test simplify method for {num_qubits} qubits with zero operators."""
         coeffs = [3 + 1j, -3 - 1j, 0, 4, -5, 2.2, -1.1j]
         labels = ["IXI", "IXI", "ZZZ", "III", "III", "XXX", "XXX"]
-        spp_op = SparsePauliOp.from_list(zip(labels, coeffs))
+        spp_op = SparsePauliOp.from_list(zip(labels, coeffs, strict=True))
         zero_op = spp_op - spp_op
         simplified_op, metadata = simplify(zero_op)
         value = Operator(simplified_op)
@@ -82,7 +82,7 @@ class TestSimplify(unittest.TestCase):
         """Test simplify method on an operator without effect."""
         coeffs = [3, 2]
         labels = ["IXI", "ZZZ"]
-        spp_op = SparsePauliOp.from_list(zip(labels, coeffs))
+        spp_op = SparsePauliOp.from_list(zip(labels, coeffs, strict=True))
         simplified_op, metadata = simplify(spp_op)
         with self.subTest("Assert Operator"):
             self.assertEqual(simplified_op, spp_op)
@@ -97,11 +97,11 @@ class TestSimplify(unittest.TestCase):
         """Test simplify method with custom tolerances"""
         coeffs = [1.0, 0.1, 0.01, 0.001]
         labels = ["III", "ZII", "IZI", "IIZ"]
-        spp_op = SparsePauliOp.from_list(zip(labels, coeffs))
+        spp_op = SparsePauliOp.from_list(zip(labels, coeffs, strict=True))
         simplified_op, metadata = simplify(spp_op, atol=1e-2, rtol=1e-2)
         target_coeffs = [1.0, 0.1]
         target_labels = ["III", "ZII"]
-        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs))
+        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs, strict=True))
         with self.subTest("Assert Operator"):
             self.assertEqual(simplified_op, target_op)
             np.testing.assert_array_equal(simplified_op.paulis.phase, np.zeros(simplified_op.size))
@@ -118,11 +118,11 @@ class TestOperatorBudget(unittest.TestCase):
         budget = OperatorBudget()
         coeffs = [1e-8, 1e-8j, 1e-8 + 1e-8j, 0.1, 0.2]
         labels = ["IXI", "IXI", "ZZZ", "XXX", "YYY"]
-        spp_op = SparsePauliOp.from_list(zip(labels, coeffs))
+        spp_op = SparsePauliOp.from_list(zip(labels, coeffs, strict=True))
         simplified_op, metadata = simplify(spp_op, atol=budget.atol, rtol=budget.rtol)
         target_coeffs = [1e-8 + 1e-8j, 0.1, 0.2]
         target_labels = ["ZZZ", "XXX", "YYY"]
-        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs))
+        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs, strict=True))
         with self.subTest("Assert Operator"):
             self.assertEqual(simplified_op, target_op)
 
@@ -131,6 +131,6 @@ class TestOperatorBudget(unittest.TestCase):
         target_coeffs = [0.1, 0.2]
         target_labels = ["XXX", "YYY"]
         simplified_op, metadata = simplify(spp_op, atol=budget.atol, rtol=budget.rtol)
-        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs))
+        target_op = SparsePauliOp.from_list(zip(target_labels, target_coeffs, strict=True))
         with self.subTest("Assert Operator"):
             self.assertEqual(simplified_op, target_op)
