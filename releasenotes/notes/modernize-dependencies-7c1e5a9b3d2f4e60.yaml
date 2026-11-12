@@ -1,0 +1,16 @@
+---
+features:
+  - |
+    Added support for Python 3.14.
+upgrade:
+  - |
+    The minimum supported versions of the core dependencies have been raised:
+    ``qiskit>=2.3``, ``qiskit-ibm-runtime>=0.48``, and ``numpy>=1.26.2``.
+    This was necessary because recent releases of ``qiskit-ibm-runtime``
+    removed the ``qiskit_ibm_runtime.utils.noise_learner_result`` module.
+    ``PauliLindbladError`` should now be
+    imported from ``qiskit_ibm_runtime.results``.
+fixes:
+  - |
+    Fixed an ``ImportError`` raised when importing ``qiskit_addon_obp`` alongside
+    recent releases of ``qiskit-ibm-runtime``.

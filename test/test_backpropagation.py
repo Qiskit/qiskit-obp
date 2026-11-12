@@ -26,7 +26,7 @@ from qiskit_addon_obp.utils.noise import PauliLindbladErrorInstruction
 from qiskit_addon_obp.utils.simplify import OperatorBudget
 from qiskit_addon_obp.utils.truncating import setup_budget
 from qiskit_addon_utils.slicing import slice_by_barriers, slice_by_depth
-from qiskit_ibm_runtime.utils.noise_learner_result import PauliLindbladError
+from qiskit_ibm_runtime.results import PauliLindbladError
 
 
 class TestBackpropagation(unittest.TestCase):

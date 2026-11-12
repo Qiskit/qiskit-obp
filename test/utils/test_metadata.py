@@ -199,7 +199,7 @@ class TestOBPMetadata(unittest.TestCase):
                 self.expected.accumulated_error(0, i)
                 for i in range(len(self.expected.backpropagation_history))
             ]
-            for e, r in zip(expected_obs_1, reality_obs_1):
+            for e, r in zip(expected_obs_1, reality_obs_1, strict=True):
                 self.assertAlmostEqual(e, r, places=10)
         with self.subTest("observable 2"):
             expected_obs_2 = [
@@ -219,7 +219,7 @@ class TestOBPMetadata(unittest.TestCase):
                 self.expected.accumulated_error(1, i)
                 for i in range(len(self.expected.backpropagation_history))
             ]
-            for e, r in zip(expected_obs_2, reality_obs_2):
+            for e, r in zip(expected_obs_2, reality_obs_2, strict=True):
                 self.assertAlmostEqual(e, r, places=10)
 
     def test_left_over_error_budget(self):
@@ -241,7 +241,7 @@ class TestOBPMetadata(unittest.TestCase):
                 self.expected.left_over_error_budget(0, i)
                 for i in range(len(self.expected.backpropagation_history))
             ]
-            for e, r in zip(expected_obs_1, reality_obs_1):
+            for e, r in zip(expected_obs_1, reality_obs_1, strict=True):
                 self.assertAlmostEqual(e, r, places=10)
         with self.subTest("observable 2"):
             expected_obs_2 = [
@@ -261,5 +261,5 @@ class TestOBPMetadata(unittest.TestCase):
                 self.expected.left_over_error_budget(1, i)
                 for i in range(len(self.expected.backpropagation_history))
             ]
-            for e, r in zip(expected_obs_2, reality_obs_2):
+            for e, r in zip(expected_obs_2, reality_obs_2, strict=True):
                 self.assertAlmostEqual(e, r, places=10)

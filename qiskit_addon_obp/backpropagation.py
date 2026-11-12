@@ -301,7 +301,8 @@ def backpropagate(
 
     # Specify the output observables on all qubits in the circuit
     obs_out = [
-        to_global_op(obs, qargs, num_qubits) for obs, qargs in zip(observables_out, qargs_out)
+        to_global_op(obs, qargs, num_qubits)
+        for obs, qargs in zip(observables_out, qargs_out, strict=True)
     ]
     # If the input was a single observable, return a single observable
     if isinstance(observables, SparsePauliOp):
@@ -419,7 +420,7 @@ def _observable_oversized(
     all_paulis = SparsePauliOp.from_list([], num_qubits=num_qubits)
     max_paulis = operator_budget.max_paulis
     max_qwc_groups = operator_budget.max_qwc_groups
-    for obs, qargs_ in zip(observables, qargs):
+    for obs, qargs_ in zip(observables, qargs, strict=True):
         global_obs = to_global_op(obs, qargs_, num_qubits)
         all_paulis += SparsePauliOp.from_list([(pauli, 1) for pauli, _ in global_obs.label_iter()])
     all_paulis = all_paulis.simplify()

@@ -26,7 +26,7 @@ from qiskit_addon_obp.utils.operations import (
     reduce_op,
     to_global_op,
 )
-from qiskit_ibm_runtime.utils.noise_learner_result import PauliLindbladError
+from qiskit_ibm_runtime.results import PauliLindbladError
 
 
 class TestOperationsFunctions(unittest.TestCase):
